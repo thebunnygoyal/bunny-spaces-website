@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bunny Spaces - Where Founders Play</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bunny-orange: #FF6B35;
+            --bunny-cream: #F7F3E9;
+            --bunny-brown: #8B4513;
+            --bunny-green: #5D8A66;
+            --text-dark: #2C2C2C;
+            --gradient-1: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            --gradient-2: linear-gradient(135deg, #5D8A66 0%, #7FB285 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bunny-cream);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(247, 243, 233, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--bunny-orange);
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: "🐰 ";
+            margin-right: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--bunny-orange);
+        }
+
+        .cta-button {
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--bunny-cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: var(--gradient-2);
+            opacity: 0.05;
+            border-radius: 0 0 0 50%;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--bunny-orange);
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--bunny-orange);
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .secondary-button:hover {
+            background: var(--bunny-orange);
+            color: white;
+        }
+
+        .hero-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .puzzle-container {
+            display: inline-block;
+            position: relative;
+            transform: rotate(-5deg);
+            margin-top: 2rem;
+        }
+
+        .puzzle-piece {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            margin: 0.5rem;
+            border-radius: 15px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .puzzle-piece:nth-child(1) { background: var(--bunny-orange); animation-delay: 0s; }
+        .puzzle-piece:nth-child(2) { background: var(--bunny-green); animation-delay: 0.5s; }
+        .puzzle-piece:nth-child(3) { background: var(--bunny-brown); animation-delay: 1s; }
+        .puzzle-piece:nth-child(4) { background: #9B59B6; animation-delay: 1.5s; }
+        .puzzle-piece:nth-child(5) { background: #E74C3C; animation-delay: 2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stats-section {
+            background: white;
+            padding: 4rem 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--bunny-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .features {
+            padding: 6rem 0;
+            background: var(--bunny-cream);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .features-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255,107,53,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .pricing {
+            background: white;
+            padding: 6rem 0;
+        }
+
+        .pricing-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .pricing-card {
+            background: var(--gradient-1);
+            color: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(255,107,53,0.3);
+        }
+
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--bunny-orange);
+        }
+
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Bunny Spaces</a>
+            <ul class="nav-links">
+                <li><a href="#events">Events</a></li>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#games">Games</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+            <button class="cta-button" onclick="joinWaitlist()">Join the Burrow 🐰</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Where Founders Stop Networking & Start Playing</h1>
+                <p>Join secret gaming events where the only currency that matters is your UNO skills. No pitches, no portfolios, just pure founder fun in the bunny burrow.</p>
+                <div class="hero-buttons">
+                    <button class="cta-button" onclick="joinWaitlist()">Get Your First Puzzle 🧩</button>
+                    <a href="#features" class="secondary-button">Learn More</a>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-top: 2rem;">
+                    <div style="display: flex; margin-left: -10px;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--bunny-orange); margin-left: -10px; border: 3px solid white;"></div>
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--bunny-green); margin-left: -10px; border: 3px solid white;"></div>
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--bunny-brown); margin-left: -10px; border: 3px solid white;"></div>
+                    </div>
+                    <p style="color: #666; margin: 0;"><strong>127 founders</strong> already in the burrow</p>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="puzzle-container">
+                    <div class="puzzle-piece">N</div>
+                    <div class="puzzle-piece">E</div>
+                    <div class="puzzle-piece">T</div>
+                    <div class="puzzle-piece">W</div>
+                    <div class="puzzle-piece">O</div>
+                    <div class="puzzle-piece">R</div>
+                    <div class="puzzle-piece">K</div>
+                </div>
+                <p style="margin-top: 2rem; font-style: italic; color: #666;">Can you solve it? 🤔</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3>127+</h3>
+                <p>Founders Playing</p>
+            </div>
+            <div class="stat-item">
+                <h3>23</h3>
+                <p>Secret Events</p>
+            </div>
+            <div class="stat-item">
+                <h3>89%</h3>
+                <p>Return Rate</p>
+            </div>
+            <div class="stat-item">
+                <h3>🎲</h3>
+                <p>Fun Guaranteed</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="features-header">
+                <h2>No Revenue Talk. Just Real Connections.</h2>
+                <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 0 auto;">We've banned networking. Seriously. Talk about your startup and you're buying the next round.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Secret Gaming Events</h3>
+                    <p>Invite-only events where founders battle it out in UNO, board games, and custom challenges. No business cards allowed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <h3>Puzzle-Driven Entry</h3>
+                    <p>Earn your way into events by solving our signature Bunny Puzzles. Smart founders only, please.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Competitive Leagues</h3>
+                    <p>Season-long competitions across multiple games. The only leaderboard that matters in startup land.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🐰</div>
+                    <h3>The Burrow Community</h3>
+                    <p>Private Discord where game strategies are shared, events planned, and genuine friendships are formed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3>Anonymous Play</h3>
+                    <p>Monthly anonymous events where you never know if you're playing against a unicorn founder or first-time entrepreneur.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Skill-Based Matching</h3>
+                    <p>Our algorithm matches you with founders of similar gaming skill levels. No embarrassing losses here.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="pricing-container">
+            <h2 style="margin-bottom: 2rem; color: var(--text-dark);">Ready to Play?</h2>
+            <div class="pricing-card">
+                <h3 style="font-size: 2rem; margin-bottom: 1rem;">The Carrot Club</h3>
+                <div style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">$29<span style="font-size: 1rem;">/month</span></div>
+                <ul style="list-style: none; margin-bottom: 2rem; line-height: 2;">
+                    <li>✅ 2 Secret Events per month</li>
+                    <li>✅ Access to The Burrow Discord</li>
+                    <li>✅ Weekly Puzzle Challenges</li>
+                    <li>✅ Gaming Tournament Entry</li>
+                    <li>✅ Anonymous Play Sessions</li>
+                    <li>✅ Founder-Only Game Library</li>
+                </ul>
+                <button class="cta-button" style="background: white; color: var(--bunny-orange); font-size: 1.1rem;" onclick="joinWaitlist()">
+                    Join the Waitlist 🥕
+                </button>
+                <p style="margin-top: 1rem; opacity: 0.9;">First 50 members get lifetime 50% discount</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <h3>🐰 Bunny Spaces</h3>
+            <p>Where founders hop from networking to fun</p>
+            <div class="social-links">
+                <a href="#">🎮</a>
+                <a href="#">🐰</a>
+                <a href="#">🎲</a>
+                <a href="#">🧩</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.7;">&copy; 2025 Bunny Spaces. No networking allowed.</p>
+        </div>
+    </footer>
+
+    <script>
+        function joinWaitlist() {
+            // In real implementation, this would connect to your backend
+            alert('🎉 Welcome to the burrow! Check your email for your first puzzle challenge. 🧩');
+            
+            // Track conversion
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'sign_up', {
+                    method: 'waitlist'
+                });
+            }
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(247, 243, 233, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(247, 243, 233, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
